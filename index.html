@@ -9,31 +9,24 @@
       content="美容意識の高い方はもう始めてます!臭いも不快感もクリア!好きピに愛されるモチフワおまんたへ。インフルエンサーがこぞって手に入れている今話題の全身に使えるフェムケアウォッシュ【CI-LK】"
     />
     <title>臭いも不快感もクリア！好きピに愛されるモチフワおまんたへ</title>
-   <link rel="stylesheet" href="reset.css">
-   <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
-
+    <link
+      rel="stylesheet"
+      href="reset.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="style.css"
+      media="print"
+      onload="this.media='all'"
+    />
     <link rel="icon" href="img/logo.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
-
-   <link
-  rel="preload"
-  as="image"
-  href="img/header_sp.webp"
-  media="(max-width: 768px)"
->
-
-<link
-  rel="preload"
-  as="image"
-  href="img/header_pc.webp"
-  media="(min-width: 769px)"
->
-
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap">
     <style>
       .pink-heart {
         color: #fa57cc;
@@ -192,21 +185,25 @@
   <body>
     <div class="wrapper">
       <header>
-        <p class="fcp-text">CI-LK フェムケアウォッシュ</p>
         <h1>
           <picture>
-           <source media="(min-width: 769px)" srcset="img/header_pc.webp" type="image/webp">
-           <source media="(max-width: 768px)" srcset="img/header_sp.webp" type="image/webp" fetchpriority="high">
-
-           <source media="(min-width: 769px)" srcset="img/header_pc.jpg">
-           <source media="(max-width: 768px)" srcset="img/header_sp.jpg">
-           <img
-            src="img/header_sp.jpg"
-            alt="CI-LK フェムケアウォッシュ キービジュアル"
-            loading="auto"
-            fetchpriority="high"
-           >
-         </picture>
+             <source
+               media="(min-width: 769px)"
+               srcset="img/header_pc.webp"
+               type="image/webp"
+             >
+             <source
+               media="(max-width: 768px)"
+               srcset="img/header_sp.webp"
+               type="image/webp"
+             >
+             <img
+               src="img/header_pc.jpg"
+               alt="CI-LK フェムケアウォッシュ キービジュアル"
+               fetchpriority="high"
+               loading="eager"
+             >
+           </picture>
          <span class="visually-hidden">
            美容意識の高い方はもう始めてます!臭いも不快感もクリア！好きピに愛されるモチフワおまんたへ♥インフルエンサーがこぞって手に入れている今話題の全身に使えるフェムケアウォッシュ【CI-LK】ってなに？
          </span>
@@ -216,17 +213,19 @@
           <p class="foam">
             <picture>
               <source srcset="img/foam.webp" type="image/webp" />
-              <img src="img/foam.jpg" alt="女性が泡を出している画像"   loading="lazy"/>
+              <img src="img/foam.jpg" alt="女性が泡を出している画像" loading="lazy"/>
             </picture>
           </p>
           <div class="woman">
-           <video
-              preload="metadata"
+            <video
+              preload="auto"
               poster="img/woman.webp"
               muted
               loop
               playsinline
-              fetchpriority="high"
+              aria-label="ツヤツヤプルプルの肌の質感動画"
+              width="1400"
+              height="1440"
               class="move"
             >
              <source src="img/woman.mp4" type="video/mp4" />
@@ -266,6 +265,7 @@
               <img
                 src="img/instagram.jpg"
                 alt="CI-LKのフェムケアウォッシュを使用したお客様のSNS画像"
+                loading="lazy"
               />
             </picture>
 
@@ -274,6 +274,7 @@
               <img
                 src="img/instagram.jpg"
                 alt="CI-LKのフェムケアウォッシュを使用したお客様のSNS画像"
+                loading="lazy"
               />
             </picture>
           </div>
@@ -286,6 +287,7 @@
             width="832"
             height="320"
             preload="metadata"
+            poster="img/beauty_ingredients.mp4"
             muted
             loop
             playsinline
@@ -371,6 +373,7 @@
               <img
                 src="img/magazine.jpg"
                 alt="超有名雑誌の画像（ananやGOODAなど10種類）"
+                loading="lazy"
               />
             </picture>
 
@@ -379,6 +382,7 @@
               <img
                 src="img/magazine.jpg"
                 alt="超有名雑誌の画像（ananやGOODAなど10種類）"
+                loading="lazy"
               />
             </picture>
           </div>
@@ -1094,28 +1098,36 @@
       </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
   const videos = document.querySelectorAll(".move");
+
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.25 // 画面に25%表示されたら再生
+  };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const video = entry.target;
-
       if (entry.isIntersecting) {
+        // 再生
         if (video.paused) {
           video.play().catch(() => {});
         }
       } else {
-        video.pause(); // ← これが超重要
+        // 停止
+        if (!video.paused) {
+          video.pause();
+        }
       }
     });
-  }, {
-    threshold: 0.25
-  });
+  }, options);
 
   videos.forEach(video => observer.observe(video));
 });
 </script>
+
 
     </div>
   </body>
